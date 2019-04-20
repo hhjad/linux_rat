@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+{{template "template/index_head.html" .}}
+
+<body class="layui-layout-body">
+    <div class="layui-layout layui-layout-admin">
+		{{template "template/index_top.html" .}}
+		{{template "template/index_left.html" .}}
+        <div class="layui-body">
+            <!-- 内容主体区域 -->
+            
+
+			<div style="padding: 15px;">
+				<table class="layui-table">
+					<thead>
+						<tr>
+							<th class="sort" style="">代理编号/备注</th>
+							<th class="sort" style="">IP/物理位置</th>
+							<th class="sort" style="">系统信息</th>
+							<th class="sort" style="">上线时间/最新通信时间</th>
+							<th class="sort" style="">管理</th>
+						</tr>
+					</thead>
+					<tbody>
+						{{range $key,$value:=.host_map}}
+						<tr>
+							<td>{{$value.did}}/{{$value.bz_name}}</td>
+							<td>{{$value.ip}}/{{$value.ip_wlwz}}</td>
+							<td>{{$value.u_os}}</td>
+							<td>{{$value.add_time}}/{{$value.update_time}}</td>
+							<td>         
+								<a target="_blank" href="/shell.html?uuid={{$value.uuid}}&id={{$value.id}}" class="fa fa-window-maximize btn btn-info" style="padding: 5px 3px;" title="命令行">&nbsp;命令行</a>
+								<!-- &nbsp;&nbsp;&nbsp;&nbsp;
+								<a target="_blank" href="/admin/gg/del_all_gg/name/www" class="fa fa-circle btn btn-warning" 
+								style="padding: 5px 3px;" title="重启">&nbsp;重启</a> -->
+							</td>
+						</tr>
+						{{end}}
+					</tbody>
+				</table>
+            </div>
+        </div>
+
+		{{template "template/index_bottom.html" .}}
+    </div>
+</body>
+
+</html>

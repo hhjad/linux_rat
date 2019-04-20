@@ -1,0 +1,11 @@
+{
+  "requires": true,
+  "lockfileVersion": 1,
+  "dependencies": {
+    "vue2-countdown": {
+      "version": "1.0.8",
+      "resolved": "https://registry.npmjs.org/vue2-countdown/-/vue2-countdown-1.0.8.tgz",
+      "integrity": "sha512-75LHeGwf5Qe+07N5RASVURtzqJknp4w/3UGnFCmQVTZbyvyk8Z5wqBh7oAcvWFlsyA1/QaiNr99QdqNTK/jTqw=="
+    }
+  }
+}

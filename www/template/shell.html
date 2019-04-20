@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+{{template "template/index_head.html" .}}
+<script src="/public/axios.min.js"></script>
+<script src="/public/lodash.min.js"></script>
+<!-- <script src="https://cdn.jsdelivr.net/npm/axios@0.12.0/dist/axios.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lodash@4.13.1/lodash.min.js"></script> -->
+
+<script src="/public/vue.js"></script>
+
+<body class="layui-layout-body">
+    <div class="layui-layout layui-layout-admin">
+		{{template "template/index_top.html" .}}
+		{{template "template/index_left.html" .}}
+        <div class="layui-body">
+            <!-- 内容主体区域 -->
+			<div style="padding: 15px;">
+				<!-- ============================= -->
+				代理编号:{{.did}}&nbsp;&nbsp;
+				备注:{{.bz_name}} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				IP:{{.ip}}&nbsp;&nbsp;
+				物理位置:{{.ip_wlwz}}	
+				</br>
+				系统信息:{{.u_os}}  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	
+				上线时间:{{.add_time}} &nbsp;&nbsp;
+				最新通信时间:{{.update_time}} 
+				</br></br>
+					<div class="layui-form-item">
+						<div class="layui-inline">
+							<label class="layui-form-label" style="width: 120px;">执行指令:</label>
+							<div class="layui-input-inline" style="width: 290px;">
+								<input type="tel" id="zl" name="zl" value="ls" autocomplete="off" class="layui-input" onkeydown="if(event.keyCode==13){get_shell();}">
+							</div>
+							<button class="fa fa-angle-left btn btn-info" onclick="get_shell()">执行命令</button>
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							<button class="fa fa-trash-o btn btn-warning" onclick="del_shell()">清空指令</button>
+						</div>
+						
+					</div>
+
+					<div class="layui-form-item layui-form-text" id="shell">
+						<textarea placeholder="等待返回指令" class="" style="height: 280px;width: 100%;">${msg}</textarea>
+					</div>
+				<!-- ============================= -->
+            </div>
+        </div>
+
+		{{template "template/index_bottom.html" .}}
+    </div>
+</body>
+
+<script>
+	var uuid="{{.uuid}}";
+	var id="{{.id}}";
+	//import CountDown from 'vue2-countdown';
+	
+	var app = new Vue({
+		el: '#shell',
+		delimiters: ['${', '}'],
+		data: {
+			msg:"",
+			totalTime: 1,
+   			canClick: true //添加canClick
+		},
+		//components: {CountDown},
+		created: function () {  //创建
+			//console.log("responsexxxxsssssssssssssssssxxxxxxxxxx");
+			//var t1 = setTimeout(this.getAnswer(),1000);    //创建定时器
+			//var timeId= window.setTimeout(this.getAnswer(),1000);
+			//var t1 = window.setInterval(this.getAnswer(),1000); 
+			//window.clearTimeout(t1);//去掉定时器 
+			//this.$nextTick(() => {this.timeDt()});
+			//this.getAnswer();
+			demo_t1 = setInterval('app.getAnswer()', 1000); //获取固定数据数据
+		},
+		methods: {   // 计算属性的  实实发生变化才变化
+			getAnswer: function () {
+				// console.log("xxxxxxxxxxxxxx");
+				// var timestamp = (new Date()).getTime();
+				// console.log(timestamp); //1495302061441
+				var data="";
+				//this.msg=this.msg+timestamp;
+				var vm = this
+				axios.get('/get_shell.html?uuid='+uuid+'&id='+id).then(function (response) {
+						if(response.data!=""){
+							//this.data=response.data;
+							ss="\r\n==========================================\r\n";
+							if(vm.msg.length>=10000){
+								vm.msg=ss+response.data;
+							}else{
+								vm.msg=vm.msg+ss+response.data;
+							}
+						}
+				})
+				.catch(function (error) {
+					//vm.answer = '请求错误 Error! Could not reach the API. ' + error
+				})
+			}
+		},
+	})
+
+// function getAnswer(){
+// 	console.log("xxxxxxxxxxxxxx");
+// }
+//demo_t1 = setInterval('app.getAnswer()', 1000); //获取固定数据数据
+// //var t1 = setTimeout(getAnswer(),1000);    //创建定时器
+// //var timeId= window.setTimeout(getAnswer(),1000);
+// //var t1 = window.setInterval(getAnswer(),1000); 
+
+function get_shell(){
+	zl=$("#zl").val();
+	if(zl==""){
+		alert("指令不能为空。");
+		return;
+	}
+	axios.get('/send_shll.html?uuid='+uuid+'&id='+id+'&zl='+zl).then(function (response) {
+		console.log(response.data);
+		if(response.data=="ok"){
+			$("#zl").val("");
+		}else{
+			alert(response.data);
+			//return;
+		}
+	})
+	.catch(function (error) {
+		//vm.answer = '请求错误 Error! Could not reach the API. ' + error
+	})
+}
+
+function del_shell(){
+	app.msg=""
+}
+
+
+
+
+</script>
+
+</html>

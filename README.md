@@ -21,11 +21,14 @@ zzkey.com BY:QQ:879301117
 
 
 服务端
+
 \src\Client\Client_run.go
+
 var Sx_url = "http://xxxxxxxxx.com/linux_ip.txt" //上线地址   
 
 
 不多说了  大家自己看代码吧
+
 有问题可以加我BY:QQ:879301117 
 
 

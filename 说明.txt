@@ -1,21 +1,84 @@
-LINUX¼¯Èº¿ØÖÆ(LINUX·´µ¯Ê½Ô¶¿Ø)
+LINUXé›†ç¾¤æ§åˆ¶(LINUXåå¼¹å¼è¿œæ§)
+import pandas as pd
+import numpy as np
+dx = pd.read_excel('text.xlsx',sheet_name='Sheet1',header=None)
+ax = pd.read_excel('TS2.xlsx',sheet_name='Sheet1',header=None)
+list = [22,58,63,69,72,113,119,135,137,159]#æœŸæ•°åˆ—è¡¨
+a = 1
+x = 1
+i = 1
+DT = [3,4,18,19]#å¤§ç‰¹åˆ—è¡¨
+hit = 0#å‘½ä¸­æ€»æ¬¡æ•°
+miss= 0#æœªå‘½ä¸­æ€»æ¬¡æ•°
+s = 0
+income = 0 #æ”¶ç›Š
+expenditure = [8,8,8,16,16,24,32,36,40,44]#æ”¯å‡ºè¡¨
+expenditureDuble=[16,16,16,32,32,48,64,72,80,88]
+expense = 0#æ”¯å‡º
+h = 0#è¿ç»­å‘½ä¸­æƒ…å†µ
+m = 0#è¿ç»­æœªå‘½ä¸­æƒ…å†µ
+x0 = 1
+y0 = 1
+o = 0
+l = 0
+e = 0
+uui=0
 
-zzkey.com BY:QQ:879301117 
-
-Ó¦ÓÃ³¡¾°
-ÒòÎª¹¤×÷ĞèÒª£¬ĞèÒª¼¯Èº¹ÜÀíÊ÷İ®ÅÉ£¬¶øÕâĞ©Ê÷İ®ÅÉ²¢Ã»ÓĞÍâÍøIPËùÒÔÎŞ·¨Ê¹ÓÃSSHÕıÏòÁ´½Ó£¬ËùÒÔ±ØĞë²ÉÓÃ·´µ¯Ê½Á´½Ó¡£
-ÎÒÖ®Ç°Ğ´¹ıÔ¶¿Ø£¬¾ÍÏëµ½ÁËÊ¹ÓÃ·´µ¯Ê½Á´½Ó¡£
-Ê¹ÓÃWEBSOCKET Á´½Ó¡£    
-¸ĞĞ»  ¿à¿§·È£¨voilet119@163.com£©  »ï¼Æ¼¼Êõ°ïÖú
-
-
-ÍøÕ¾Ê¹ÓÃµÄBEEGO
-
-
-·şÎñ¶Ë
-\src\Client\Client_run.go
-var Sx_url = "http://xxxxxxxxx.com/linux_ip.txt" //ÉÏÏßµØÖ·   
-
-
-²»¶àËµÁË  ´ó¼Ò×Ô¼º¿´´úÂë°É
-ÓĞÎÊÌâ¿ÉÒÔ¼ÓÎÒBY:QQ:879301117 
+while x <= 1055:
+    for y in list:
+        b = dx.iloc[x,y] 
+        
+        if y == 159:
+            x = x+1
+        else:
+            a = 0
+  
+ 
+        #è·å–æ”¯å‡ºè¡¨ï¼ŒæŒ‰æ”¯å‡ºè¡¨æŠ•èµ„
+       
+        j = expenditureDuble[o]
+        print(b)
+        if b in DT:
+            
+            income = j*9.5#å‘½ä¸­
+            
+            hit = hit+1
+            h =h+1
+            m = 0
+            o = 0
+            #print("h = ",h)
+        else:
+            m = m+1
+            h = 0
+            income = -j
+            uui = uui + 1
+            o = o+1
+            #print("uui = ",uui)
+   
+        #print("income=",income)
+        s = income+s
+        #print("s =",s)
+        
+        
+        if h>l:    
+            l = h#æœ€å¤§è¿ç»­å‘½ä¸­
+        if  m>e: 
+            e = m      #æœ€å¤§è¿ç»­æœªå‘½ä¸­
+        
+        
+        if o >=9:
+            o = 0       
+        ax.iloc[x0,y0] = s
+        print(s)
+        y0 = y0+1
+        if y0==11:
+            y0 = 1          
+            x0 = x0+1    
+              
+print("hit,m:",hit,m)             
+print("æœ€å¤§è¿ç»­æœªå‘½ä¸­:",e)
+print("æœ€å¤§è¿ç»­å‘½ä¸­:",l)            
+print("æ‰§è¡Œå®Œæˆï¼ï¼ï¼")
+print("ä¿å­˜ä¸­....")
+ax.to_excel('TS1.xlsx')
+print("æ‰§è¡Œå®Œæˆè¯·æŸ¥æ”¶")    

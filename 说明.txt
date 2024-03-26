@@ -1,4 +1,4 @@
-LINUX集群控制(LINUX反弹式远控)
+
 import pandas as pd
 import numpy as np
 dx = pd.read_excel('text.xlsx',sheet_name='Sheet1',header=None)

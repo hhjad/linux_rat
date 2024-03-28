@@ -1,7 +1,843 @@
+**********************投资函数bet1********************
+import pandas as pd
+import time
+# x = 0
+# tx = ""
+# teme = 2024
+#本方法运用在text86.py中有体现范本tx格式为textR.xlsx
+def Tbet1_hot(ma,x,choose,fp):#ma:普通下注数字 ，X:下注期数或表格中的第几行， choose:下注名次在表格中的位置y：，普通下注数字位数 tx:测试文件DataFirm
+ 
+    c  = 0
+    
+    choose = choose+1
+    
+    if isinstance(choose,int) and isinstance(ma,list): 
+        print("多数一名下注模式！！")
+        for i in ma:
+            mac = fp.iloc[x,choose]
+            #print(mac)
+            if i == mac:
+                print("Win!!!#")
+                c = 1
+        print("结果：",mac)    
+    if isinstance(choose,list) and isinstance(ma, int): 
+        print("一数多名下注模式！！")
+        for y in choose:
+            mac = fp.iloc[x,y]
+            if ma == mac:
+                print("WIN!!!!!!")
+                c = 1
 
+    if c == 1:
+        return True
+    else:
+        return False
+                
+
+*******************************获取当期开奖号码（DesverF）****************************
+import pandas as pd
+#ax = pd.read_excel('wz1.xlsx',sheet_name='Sheet1',header=None)
+
+#----------------根据表格坐标获取开奖号码-------------
+def discover_front(start,data,fp):#data为第一名在表格中的y值.start为行数的x值
+    list = []
+    q = 0
+    while q < 10:
+        a = fp.iloc[start,data]
+        data = data+1
+        
+        list.insert(q, a)
+        q = q+1 
+        #print(list)    
+            
+    return list        
+# if __name__ == '__main__':
+#     fp = pd.read_excel('betbigC.xlsx',sheet_name='Sheet1',header=None)
+#     a = discover_front(start=189999, data=2, fp=fp)
+#     print(a)            
+#
+
+******************************大特？？？操作**********************************
 import pandas as pd
 import numpy as np
-dx = pd.read_excel('text.xlsx',sheet_name='Sheet1',header=None)
+from study.Tbet1 import Tbet1_hot
+
+
+rd = pd.read_excel('betbigG58.xlsx',sheet_name='Sheet1',header=None)
+er = pd.read_excel('TGL.xlsx',sheet_name='Sheet1',header=None)
+DT = [3,4,18,19]
+n = 1
+y = 16
+x = 0
+j =1
+k =1
+z = 1
+while y<=181:
+#     
+    array = rd.iloc[n,y-15:y]
+    for a in array:
+        if a in DT:
+            x =x+1
+    er.iloc[j,k] = x
+    
+    
+    y = y+1
+    x = 0
+    k = k+1
+    if y>181:
+        y = 16
+        n = n+1
+        k = 1
+        j = j+1
+    if n >1055:
+        break
+print("执行完成！！！")
+print("保存中....")
+er.to_excel('TGL.xlsx')
+print("执行完成请查收") 
+
+
+******************************#前两名位置运算，适合大特，不一定可行******************************
+import pandas as pd
+import numpy as np
+dx = pd.read_excel('betbigC.xlsx',sheet_name='Sheet1',header=None)
+ax = pd.read_excel('wz1.xlsx',sheet_name='Sheet1',header=None)
+#mx = pd.read_excel('wz2.xlsx',sheet_name='Sheet1',header=None)
+#前两名位置运算，适合大特
+x = 1
+y = 2
+y0 = 3
+    
+x1 = 1
+y1 = 1
+i = 1
+z = 0
+zhjg = 0
+date = [3,4,18,19]
+betdate = [16,16,16,32,32,48,64,72,80,88]
+while x<189999:    
+    
+    m1 = dx.iloc[x,y]
+    m2 = dx.iloc[x,y0]
+    y = y+1
+    if y == 3:
+        y = 2
+    
+    x = x + 1
+    if m1 in[10,1] and m2 in [10,1]:
+        while i <=4:
+            l1 = dx.iloc[x+i,y]
+            l2 = dx.iloc[x+i,y0]
+            i = i+1
+            list = [l1,l2]
+            if 1 or 10 in list:
+                if l1+l2 not in date:
+                    z = z + 1
+        if z == 3:
+            for u in betdate:
+                l1 = dx.iloc[x+i,y]
+                l2 = dx.iloc[x+i,y0]
+                i = i+1
+                if l1+l2 in date:
+                    jg = 9.5*u
+                else:
+                    jg = -u
+                        
+                zhjg = zhjg+jg
+                ax.iloc[x1,y1] = zhjg
+                print(zhjg)
+                if y1 == 10:
+                    x1 = x1+1
+                    y1 = 1         
+                           
+                     
+ax.to_excel('wz1.xlsx')
+print("结束")              
+
+
+***********************获取大特10连投资结果到excel表格************************
+import pandas as pd
+import numpy as np
+from study.Tbet1 import Tbet1_hot
+
+
+rd = pd.read_excel('betbigG58.xlsx',sheet_name='Sheet1',header=None)
+er = pd.read_excel('TGL.xlsx',sheet_name='Sheet1',header=None)
+DT = [3,4,18,19]
+n = 1
+y = 16
+x = 0
+j =1
+k =1
+z = 1
+while y<=181:
+#     
+    array = rd.iloc[n,y-15:y]
+    for a in array:
+        if a in DT:
+            x =x+1
+    er.iloc[j,k] = x
+    
+    
+    y = y+1
+    x = 0
+    k = k+1
+    if y>181:
+        y = 16
+        n = n+1
+        k = 1
+        j = j+1
+    if n >1055:
+        break
+print("执行完成！！！")
+print("保存中....")
+er.to_excel('TGL.xlsx')
+print("执行完成请查收") 
+
+**********************************统计函数**********************
+import pandas as pd
+
+
+df = pd.read_excel("betbigG58.xlsx",sheet_name='Sheet1',header=None)
+cf = pd.read_excel("总计.xlsx",sheet_name='Sheet1',header=None)
+
+
+#设置初始值
+
+x = 1
+y = 1
+x0 = 1
+y0 = 0
+i = 1
+a = 1
+dt = df.iloc[x,y]
+sum = 0
+ct = 0
+b = 1
+k = 0
+pim = 0#平均数
+sim = 0#小数次
+big = 0#大数次
+dati = 0#大特次
+xaoti = 0#小特次
+datiGL = 0#大特概率
+xaotiGL =0#小特概率
+sGL = 0#双概率
+dGL = 0#单概率
+dsit = 0#单数次
+ssit = 0#双数次
+sitmax = 0#最多数
+sitmin = 0#最小数
+maxsit = 0#最多数次
+minsit = 0#最少数次
+
+#print(dt)
+#计算每期总数
+
+
+# 一列一列获取数据统计出现次数结果
+list = [3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19]
+
+
+while y<=180:
+    y0 = y0+1
+    col = df.iloc[1:1056,y:y+1]#获取1-1056行，y-y+1列数据到col对象中
+    
+    print("正在执行第",y,"行")
+    
+    
+    c = col.apply(pd.value_counts)#统计各个数据出现的次数
+    
+    
+    print(c)
+    maxsit = c.iloc[0,0]
+    minsit = c.iloc[16,0]
+    print(maxsit,minsit)
+    for k in list:
+        
+        print("k = ",k)
+        a = c.loc[k,y]#c已统计出来，以对象形式。此行代码为访问C统计中的数字k的出现次数赋值给a
+#         if a>minsit:#最多次数
+#             minsit = a
+#         if a<maxsit:#最少次数
+#             maxsit = a
+        
+        print("a = ",a,"k = ",k)
+        sum = sum+k*a
+       
+        
+        #判断单双
+        if k%2==0:
+            ssit = a +ssit
+        else:
+            dsit = dsit+a
+        #判断大特
+        if k <5 or k>17:
+            dati = dati+a
+        #判断大小
+        if k< 12:
+            sim = sim+a
+        else:
+            big = big+a
+        if  a == maxsit:
+            sitmax = k   
+        if  a == minsit:
+            sitmin = k    
+    pim = sum/1055       
+    sGL =ssit/1055
+    dGL =dsit/1055
+    datiGL = dati/1055
+    simGL = sim/1055
+    bigGL = big/1055
+    f = [sum,pim,dati,datiGL,dsit,ssit,dGL,sGL,big,sim,bigGL,simGL,sitmax,maxsit,sitmin,minsit]
+    sum = 0
+    x0 = 1
+    for i in f:#一列一列打印
+        print(i,x0,y0)
+        cf.iloc[x0,y0] = i
+        x0 = x0+1
+        print("正在打印.........")
+    y = y+1
+    pim = 0#平均数
+    sim = 0#小数次
+    big = 0#大数次
+    dati = 0#大特次
+    xaoti = 0#小特次
+    datiGL = 0#大特概率
+    xaotiGL =0#小特概率
+    sGL = 0#双概率
+    dGL = 0#单概率
+    dsit = 0#单数次
+    ssit = 0#双数次
+    sitmax = 0#最多数
+    sitmin = 0#最小数
+    maxsit = 0#最多数次
+    minsit = 0#最少数次   
+print("打印完成！！！")
+print("保存中....")
+cf.to_excel('总计.xlsx')
+print("执行完成请查收")   
+        
+    ********************************大特开奖历史到excel*************************
+import pandas as pd
+   #sa1
+x = 1
+y = 1
+i = 1
+x1 = 1
+y1 = 1
+
+#读取表格创建为对象df->betbigS.xlsx,sf->betbigG.xlsx
+df = pd.read_excel("text.xlsx",sheet_name='Sheet1',header=None)
+sf = pd.read_excel("BGTX.xlsx",sheet_name='Sheet1',header=None)
+
+#xg = df.iloc[x,y]
+#xg =str(xg)
+#xg = xg+1
+#print(sf.iloc[x1,y1])
+#sf.iloc[x1,y1] = xg
+# 
+#print(xg)
+
+
+# 
+#sg = sf.iloc[x1,y1]
+# 
+#print(xg)
+#result = df.iloc[5,12]
+#result = df.iloc[1,1]
+#print(result)
+
+# 循环读取df第3列转化为sf第一行
+while x < 14001:
+    xg = df.iloc[x,y]
+    print(xg)
+      
+      
+        
+    #print(xgc)
+    sf.iloc[x1,y1] = xg
+    y1 = y1+1
+        
+#     cd = sf.iloc[x1,y1]
+     #print(cd)
+    if i == 180:
+        i = 0
+        x1 =x1+1
+        y1 = 1
+        
+        
+           
+                
+    x = x+1
+      
+    i = i+1
+    print("正在执行第",x,"次......")
+        
+      
+      
+print("执行完成！！！")
+print("保存中....")
+sf.to_excel('BGTX.xlsx')
+print("执行完成请查收")
+**************************************************************Descover1**************
+import pandas as pd
+
+from study.DescoverF import discover_front
+
+#--------------出现数字numb的几名------------------
+def  discover_One(numb,bout,start,data,fp):#返回的是列表中的名次故真实名次需要加一
+    i = 0
+   
+    b = 0
+    getlist = []
+    while i <= bout:
+        a = 0
+        list = discover_front(start=start,data=data,fp=fp)
+        for r in list:
+            if r == numb:
+                getlist.insert(b, a)
+                b = b+1
+              
+                
+            a = a+1
+        bout = bout-1
+        start = start-1
+    
+    
+    return getlist
+
+
+if __name__ == '__main__':
+    fp = pd.read_excel('betbigC.xlsx',sheet_name='Sheet1',header=None)
+    a = discover_One(numb=9,bout=15,start=189999,data=2, fp=fp)
+    print(a)
+    
+
+*****************************************************Desdover2*********************************
+import pandas as pd
+import numpy as np
+from study.DescoverF import discover_front
+# dx = pd.read_excel('betbigC.xlsx',sheet_name='Sheet1',header=None)
+
+#----------------预测什么数后面跟numb的统计函数----------------
+def Descover_On(start,numb,bout,fp):#采用检测前bout期中numb后出现最多的数，start==表格行数（倒）
+    i = 0
+    
+    ys = 0
+    gtr = 0
+    getlist = []
+    nubmlist =[]
+    while bout>0:
+        
+        list = discover_front(start=start,data=2,fp=fp)#获取当期开奖数据
+        if ys == 18:
+            nubmlist.insert(gtr,list[i])
+            gtr = gtr+1
+            bout = bout-1 
+            i = 0
+        for r in list:#检测numb在第几位
+            
+            if r == numb:
+                asf = 0
+                
+                break    
+            i = i+1
+       
+        start = start-1      
+        ys = 18
+    return nubmlist
+# if __name__ == '__main__':
+#     fp = pd.read_excel('betbigC.xlsx',sheet_name='Sheet1',header=None)
+#     a = Descover_On(start=189999,numb=10,bout=15,fp=fp)
+#     print(a)
+
+******************************Descover3****************************************************
+import pandas as pd
+
+fp = pd.read_excel('betbigC.xlsx',sheet_name='Sheet1',header=None)
+#df = pd.read_excel('df.xlsx',sheet_name='Sheet1',header=None)
+# list = []
+
+
+#------------------斜方向号码---------------------
+#当get= 1时返回出现数值次数列表，其它情况返回出现数值降序列表
+def Incline_be(H,ranking,fp,tensit,get):#H==开始行数（倒叙）----ranking==结果名次1,2,3在表格中的y值即名次加一---------fp==excel对象-----tensit表述第十名在表格中的y值
+    x = H-1
+    y = ranking+1
+    i = 0
+    list = []
+    while y<=tensit:
+        list.insert(i, fp.iloc[x,y])
+        x = x-1
+        y = y+1
+    print(list)
+    act = pd.value_counts(list).to_frame()
+    act1 = act.reset_index()
+    a = act1['index'].tolist()
+    b = act1['count'].tolist()
+#     
+    print(act1)
+#     print("----------------")
+#     print(a)
+#     print("----------------")
+#     print(list)
+       
+    
+    if get == 1:
+        return b
+    else:
+        return a 
+    
+
+
+
+               
+    
+if __name__ == '__main__':
+    b = Incline_be(H=189999, ranking=3, fp=fp, tensit=11,get = 5)
+    print("list==",b)
+*******************************************************Descover4***********************
+import pandas as pd
+import time
+
+from study.DescoverF import discover_front
+
+
+
+#------------》》numb后面容易跟什么****start必须大于bout《《--------------------------
+
+def discover_later(numb,start,data,fp,bout,ranking):#start==开始期数/表格x值，，data==第一名位置,numb==号码,选取ranking位《《
+        
+    start = start -bout
+    b = 0
+    getlist = []
+    lists = []
+    a = 0
+    while bout>=0:
+            
+        list = discover_front(start=start,data=data,fp=fp)#获取start- bout期开奖号码
+        if b>0:
+            getlist.insert(b-1, list[a])
+            a = 0
+        for i in list:
+            
+            if i == numb:
+               
+                break 
+                
+            a = a+1   
+               
+        
+        bout = bout - 1
+        start = start +1       
+        b = b+1
+    #print(getlist)
+    g = pd.value_counts(getlist).to_frame()
+    
+    #print(g)
+    g1=g.reset_index()
+    
+    glist1= g1['index'].tolist()
+    glist = glist1[0:ranking]
+    #print(g1)
+    return glist
+#     
+# if __name__ == '__main__':
+#     s1 = time.perf_counter()
+#     fp = pd.read_excel('betbigC.xlsx',sheet_name='Sheet1',header=None)
+# 
+***********************************总方法集合函数*********************
+import pandas as pd 
+from study.DescoverF import discover_front
+import operator.eq as eq
+
+ 
+#------------------斜方向号码---------------------
+#当get= 1时返回出现数值次数列表，其它情况返回出现数值降序列表
+def Predict_Modle1(H,ranking,fp,tensit,get):##H==开始行数（倒叙）----ranking==结果名次1,2,3在表格中的y值即名次加一---------fp==excel对象-----tensit表述第十名在表格中的y值
+    x = H-1
+    y = ranking+1#传递名次
+    i = 0
+    list = []
+    while y<=tensit:
+        list.insert(i, fp.iloc[x,y])
+        x = x-1
+        y = y+1
+    print(list)
+    act = pd.value_counts(list).to_frame()#转化list为pd.frame类型
+    act1 = act.reset_index()#初始化索引
+    a = act1['index'].tolist()
+    b = act1['count'].tolist()
+#     
+    print(act1)
+#     print("----------------")
+#     print(a)
+#     print("----------------")
+#     print(list)
+       
+    
+    if get == 1:
+        return b
+    else:
+        return a 
+    
+    
+#--------------出现数字numb的几个位置------------------    
+def Predict_Modle2(numb,bout,start,data,fp):#返回的是列表中numb开在的真实名次列表,bout==统计之前期数的开奖频次
+#返回bout+1期start期也包含在内   
+    b = 0
+    getlist = []
+    while 0 <= bout:
+        a = 1
+        list = discover_front(start=start,data=data,fp=fp)#获取开奖号码
+        print(list)
+        for r in list:
+            if r == numb:
+                print(a)
+                getlist.insert(b, a)
+                b = b+1
+              
+                
+            a = a+1
+        bout = bout-1
+        start = start-1
+    
+    act = pd.value_counts(getlist).to_frame()
+    act1 = act.reset_index()
+    print(act)
+    a = act1['index'].tolist()
+    b = act1['count'].tolist()
+
+    return a
+    
+    
+    
+#------------》》numb后面容易跟什么,返回排名前ranking的号码****start必须大于bout《《---------------
+def Predict_Modle3(numb,start,data,fp,bout,ranking):#start==开始期数/表格x值，，data==第一名位置,numb==号码,选取ranking位《《
+            
+    start = start -bout
+    b = 0
+    getlist = []
+    lists = []
+    a = 0
+    while bout>=0:
+            
+        list = discover_front(start=start,data=data,fp=fp)#获取start- bout期开奖号码
+        if b>0:
+            getlist.insert(b-1, list[a])
+            a = 0
+        for i in list:
+            
+            if i == numb:
+               
+                break 
+                
+            a = a+1   
+               
+        
+        bout = bout - 1
+        start = start +1       
+        b = b+1
+    #print(getlist)
+    g = pd.value_counts(getlist).to_frame()
+    
+    #print(g)
+    g1=g.reset_index()
+    
+    glist1= g1['index'].tolist()
+    glist = glist1[0:ranking]
+    #print(g1)
+    return glist
+ 
+ 
+#--------------前bount期相邻两位后出现的两位数字——————————————————————    
+def Predict_Model4(start,bout,data,get,fp,a):#get表示获取多少次需要的结果，bout表示运行多少期（必填）
+    #hav表示取前几期的统计值，a表示两位中第一位名次，取值范围1-9
+    num2 = []
+    x,y= 1
+    r,u,c,i,t= 0
+    a = a-1#把列表名次转化为实际名次传参a时只需要填写真实两位开头名次
+    listC0,listS0,listM0 = []   
+    nubm = [[],[],[],[],[],[],[],[],[]]#定义二维列表
+    while 0 <= bout:
+        if get <=0:
+            break
+        list = discover_front(start=start,data=data,fp=fp)#获取start-1期即start行数的开奖号码
+        print(list)
+        while i<9:#获取开奖两位排列到二维数组
+            num2 = [list[i],list[i+1]]
+            nubm[i] = num2 
+            i= i+1
+            print("nubm==",nubm)
+            
+        if u==0:#存储当期两位排列
+            
+            sd = nubm
+        else:#获取往期数据两位，判断是否存在，存在就记录位置到变量a
+            for k in nubm:#nubm为历史开奖start期两位排列列表
+                
+                if k == sd[a]:
+                    
+                    if 0<r<=7:
+                        list1=[fp.iloc[start+1,r+1],fp.iloc[start+1,r+2],fp.iloc[start+1,r+3],fp.iloc[start+1,r+4]]#连续两位后一期上4位数
+                        list2 = [fp.iloc[start-1,r+1],fp.iloc[start-1,r+2],fp.iloc[start-1,r+3],fp.iloc[start-1,r+4]]#连续两位前一期下4位数
+                        list3 = [fp.iloc[start,r+1],fp.iloc[start,r+4]]#连续两位旁边的两位数
+                        listS = list1+list2+list3#记录两位周围的数字
+                    elif r == 0:
+                        list1 = [fp.iloc[start+1,r+2],fp.iloc[start+1,r+3],fp.iloc[start+1,r+4],fp.iloc[start+1,r+11]]
+                        list2 = [fp.iloc[start-1,r+2],fp.iloc[start-1,r+3],fp.iloc[start-1,r+4],fp.iloc[start-1,r+11]]
+                        list3 = [fp.iloc[start,r+4],fp.iloc[start,r+11]]
+                    else:
+                        list1 = [fp.iloc[start+1,r+1],fp.iloc[start+1,r+2],fp.iloc[start+1,r+3],fp.iloc[start+1,r-6]]
+                        list2 = [fp.iloc[start-1,r+1],fp.iloc[start-1,r+2],fp.iloc[start-1,r+3],fp.iloc[start-1,r-6]]
+                        list3 = [fp.iloc[start,r+1],fp.iloc[start,r-6]]
+                        
+                    listS = list1+list2+list3#记录两位周围的数字    
+                    n1 = fp.iloc[start+1,r+2]#n1与n2为上两位
+                    n2 = fp.iloc[start+1,r+3]
+                    listC = [n1,n2]
+                    listM = [a+1,a+2]#下注名次为实际名次
+                    get = get-1
+                    break
+                r = r+1         
+                
+                
+        listS0 = listS+listS0
+        listM0 = listM+listM0
+        listC0 = listC+listC0    
+        u= u+1    
+        bout = bout-1
+        start = start-1
+    return listC0,listS0,listM0
+********************************大特画图******************************
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+# 设置中文和负号正常显示
+plt.figure(figsize=(10,10))
+plt.figure(dpi=1080)
+plt.rcParams['font.sans-serif'] = 'Microsoft YaHei'
+plt.rcParams['axes.unicode_minus'] = False
+rd = pd.read_excel('TS1.xlsx',sheet_name='Sheet1',header=None)
+pz = []
+sz = []
+i = 0
+x =1
+y = 1
+o=1.0
+c = 0
+b = 0
+while x <= 1055:
+    
+    nub = rd.iloc[x,y]
+    
+    sz.insert(i, nub)
+    
+    y = y+1
+    i = i +1
+    if y == 11:
+       y = 1
+       x = x+1
+
+print(len(sz))
+i = 0
+while o<1056:
+    
+    
+    o = round(o,1)
+    pz.insert(i,o)
+    i = i+1
+    o = o+0.1
+print(len(pz))
+print(sz[0:10])
+print(pz[0:10])
+
+plt.plot(pz, sz, color='#FF0000', label='期望收益', linewidth=0.3)    
+# for a in pz:
+#     b = sz[c] 
+#     plt.text(a, b, s = b,ha='center', va= 'bottom',fontdict=18)
+#     c = c+1
+plt.hlines(0, 0, 1056, colors = "#000000", linestyles = "dashed")
+plt.xlabel(u'期数', fontsize=18)
+plt.ylabel(u'收益', fontsize=18)
+plt.legend(fontsize=18)
+
+plt.savefig('outputdpi5.svg', format='svg')           
+
+*********************************获取号码开在当期第几名*****************
+import pandas as pd
+from study.DescoverF import discover_front
+
+def Sit_nubm(start,data,fp,numb):##返回号码numb在列表开奖号码的索引也就是开在第几位减一
+    a = 0
+    
+    list = discover_front(start=start,data=data,fp=fp)
+    for i in list:
+        if i == numb: 
+            return a
+
+        a = a+1
+
+    return a 
+***********************************投资函数运用****************
+import pandas as pd
+from study.Tbet1 import Tbet1_hot
+
+
+o = 0
+l = 0
+d = 0
+s = 0
+b = 0
+c =0
+e = 0
+ax = pd.read_excel('betbigC.xlsx',sheet_name='Sheet1',header=None)
+
+while b<= 100000:
+            
+    a = Tbet1_hot(ma=9,x=b,choose=[2,3,4,5,6],tx=ax)
+    
+    if a:
+        s = s+1
+        e = e+1
+        c = 0
+    else:
+        d = d+1
+        c = c+1
+        e = 0        
+    b = b+1
+    
+    if o<e:
+        o = e
+    else:
+        uuu = 1
+       
+    if l<c:
+        l = c
+    else:
+        uuu = 1
+        
+    if o == 18:
+        print(ax)
+        break
+    
+        
+      
+      
+print("共测试",b,"次")
+print("共失败",d,"次")
+print("共成功",s,"次")
+print("成功率",s/b)
+print("最大连续失败",o,"次")
+print("最大连续成功",l,"次")
+
+****************************************************获取收益表到excel***********************
+import pandas as pd
+import numpy as np
+
+#导入dx标准文件参考betbig58，导出参考TS系列
+dx = pd.read_excel('BGTX.xlsx',sheet_name='Sheet1',header=None)
 ax = pd.read_excel('TS2.xlsx',sheet_name='Sheet1',header=None)
 list = [22,58,63,69,72,113,119,135,137,159]#期数列表
 a = 1
@@ -24,7 +860,7 @@ l = 0
 e = 0
 uui=0
 
-while x <= 1055:
+while x <= 76:
     for y in list:
         b = dx.iloc[x,y] 
         
@@ -69,16 +905,135 @@ while x <= 1055:
         if o >=9:
             o = 0       
         ax.iloc[x0,y0] = s
-        print(s)
         y0 = y0+1
         if y0==11:
             y0 = 1          
             x0 = x0+1    
-              
+print(s)              
 print("hit,m:",hit,m)             
 print("最大连续未命中:",e)
 print("最大连续命中:",l)            
 print("执行完成！！！")
 print("保存中....")
 ax.to_excel('TS1.xlsx')
-print("执行完成请查收")    
+print("执行完成请查收")            
+      ****************************集合运用***********************
+import pandas as pd
+from study.Descover4 import discover_later
+from study.DescoverF import discover_front
+from study.Sitnubm import Sit_nubm
+from study.Tbet1 import Tbet1_hot
+import time
+#fp = pd.read_excel('betbigC.xlsx',sheet_name='Sheet1',header=None)
+def Invest_numb(start,fp,money,numb,bout,ranking,qs):
+    x = 1
+    y = 1
+    er = 0
+    k = 1
+    z = 0
+    o = 0
+    F = 0#连续错误次数
+    T = 0#连续正确次数
+    R = 0
+    i=0
+    gl = 0
+    op = 0
+    groList=[1,2,3,4,5,6,7,8,9,10]
+    u = 0
+    listR = []
+    money2 = money
+    en = 0
+    listp=[]
+    while qs>0:#投注次数
+         
+        ma = discover_later(numb=numb, start=start,data=2, fp=fp, bout=bout,ranking =ranking)#确定numb后面容易跟什么
+        print(ma)
+        choose = Sit_nubm(start=start,data=2,fp=fp,numb=numb)+1#确定numb的位置
+#         if T == 3:
+#             for i in ma:
+#                 groList.remove(i)
+#             ma = groList
+#             money = money*2
+#             u = 1
+#             groList =[1,2,3,4,5,6,7,8,9,10]
+#         if F == 3:
+#             money = money*2
+#             u = 1
+        if Tbet1_hot(ma=ma,choose=choose,x=start+1,fp=fp): #下注
+#             if u ==1:
+#                 money = money/2
+#                     u = 0
+            moy = (money/ranking)*10#记录盈利收益
+               
+            T = T+1
+            F = 0 
+            z = z+1
+        else:
+            listR.insert(i, T)#记录连续失败次数到列表
+            moy = -money
+            F = F+1
+            o = o+1
+            T = 0
+            i= i+1
+        if T>u:
+            u = T
+        if F>R:
+            R = F    
+        print(choose)    
+        er = moy+er#记录总收益
+        er = round(er)
+        if y<=180:#以180为一天记录收益到表格。  
+            df.iloc[x,y]=er
+            y = y+1
+        else: 
+            y = 1
+            x = x+1
+        print("--------正在执行第",k,"次投注--------")
+        qs = qs -1
+        k = k+1
+        start = start+1
+    print("成功次数",z)
+    print("失败次数",o)
+    print("最大连续成功次数：",u)
+    print("最大连续失败次数：",R)
+    u = 0
+    for gl in listR:
+        
+        u = gl+u
+        if gl <11:
+            
+            en = en+1
+        else:
+            en = 0
+        listp.insert(op, en)
+        op = +1
+    Gi = u/len(listR)#计算平均连续次数
+    print("成功次数列表listR==",listR)
+    print("平均连续次数：",Gi)
+    return R
+if __name__ == '__main__':
+    pop = 0
+    start =181
+    listrt = []
+    print("读取表格中...........")
+    s1 = time.perf_counter()#记录读取表格时间
+    fp = pd.read_excel('betbigC.xlsx',sheet_name='Sheet1',header=None)
+    df = pd.read_excel('prodict.xlsx',sheet_name='Sheet1',header=None)
+    s2 = time.perf_counter()
+    print("读取总时间：",s2-s1,"s")
+    while pop <=600:#按天数记录最大连续错误次数
+        a =Invest_numb(start=start,fp=fp,money=180,numb=1,bout=25,ranking=8,qs=180)
+        start = start+180
+        listrt.insert(pop, a)
+        pop = pop+1
+    print(listrt)
+    g = pd.value_counts(listrt).to_frame()#统计每天连续错误次数
+    
+    #print(g)
+    g1=g.reset_index()
+    print(g1)    
+        
+  
+    #df.to_excel('prodict4.xlsx')
+    print("保存成功")      
+    
